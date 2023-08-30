@@ -15,6 +15,7 @@ import com.stepahead.cruddemo.entity.Student;
 @SpringBootApplication
 public class CruddemoApplication {
 	int id;
+
 	public static void main(String args[]) {
 		SpringApplication.run(CruddemoApplication.class, args);
 	}
@@ -25,28 +26,39 @@ public class CruddemoApplication {
 //			createStudent(studentDAO);
 //			createMultipleStudent(studentDAO);
 //			readStudent(studentDAO);
-			queryForStudents(studentDAO);
+//			queryForStudents(studentDAO);
+			findStudentByLastname(studentDAO);
 		};
 
 	}
 
+	private void findStudentByLastname(StudentDAO studentDAO) {
+		List<Student> myStudents = studentDAO.findByLastName("Low");
+
+		for (Student tempStudent : myStudents) {
+			System.out.println(tempStudent);
+		}
+		
+		if(myStudents.isEmpty())
+				System.out.println("No Record Found");
+	}
+
 	private void queryForStudents(StudentDAO studentDAO) {
 		List<Student> myStudents = studentDAO.findAll();
-		
-		for(Student tempStudent: myStudents) {
+
+		for (Student tempStudent : myStudents) {
 			System.out.println(tempStudent);
 		}
 	}
 
 	private void readStudent(StudentDAO studentDAO) {
 		Student myStudent = studentDAO.findById(5);
-		
-		if(myStudent != null) {
+
+		if (myStudent != null) {
 			System.out.println("First Name: " + myStudent.getFirstName());
 			System.out.println("Last Name: " + myStudent.getLastName());
 			System.out.println("Email ID: " + myStudent.getEmail());
-		}
-		else {
+		} else {
 			System.out.println("Record Not Found");
 		}
 	}
@@ -58,14 +70,14 @@ public class CruddemoApplication {
 		Student tempStudent4 = new Student("Emily", "Williams", "emilywilliams@gmail.com");
 		Student tempStudent5 = new Student("Daniel", "Brown", "danielbrown@gmail.com");
 		Student tempStudent6 = new Student("Olivia", "Davis", "oliviadavis@gmail.com");
-		
+
 		studentDAO.save(tempStudent1);
 		studentDAO.save(tempStudent2);
 		studentDAO.save(tempStudent3);
 		studentDAO.save(tempStudent4);
 		studentDAO.save(tempStudent5);
 		studentDAO.save(tempStudent6);
-		
+
 		System.out.println("Record Inserted..");
 
 	}

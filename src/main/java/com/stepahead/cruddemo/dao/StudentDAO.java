@@ -11,7 +11,10 @@ public interface StudentDAO {
 	//Find the record by ID
 	Student findById(Integer id);
 	
-	//Find the record by last name
+	//List all the record 
 	List<Student> findAll();
+	
+	//Find the record by Last name
+	List<Student> findByLastName(String lastName);
 
 }
