@@ -6,7 +6,6 @@ import org.springframework.boot.CommandLineRunner;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
 import com.stepahead.cruddemo.dao.StudentDAO;
@@ -27,8 +26,43 @@ public class CruddemoApplication {
 //			createMultipleStudent(studentDAO);
 //			readStudent(studentDAO);
 //			queryForStudents(studentDAO);
-			findStudentByLastname(studentDAO);
+//			findStudentByLastname(studentDAO);
+//			updateStudent(studentDAO);
+//			deleteStudent(studentDAO);
+			deleteAllStudents(studentDAO);
 		};
+
+	}
+
+	private void deleteAllStudents(StudentDAO studentDAO) {
+		// delete all the records
+		int recordDeleted = studentDAO.deleteAll();
+
+		// Print how many students record has deleted
+		System.out.println("Students Records deleted: " + recordDeleted);
+	}
+
+	private void deleteStudent(StudentDAO studentDAO) {
+		int id = 3;
+		System.out.println("Attempting to delete the Student id: " + id);
+		studentDAO.delete(id);
+	}
+
+	private void updateStudent(StudentDAO studentDAO) {
+		int ID = 1;
+		String updateName = "David";
+		// retrieve the student based on ID
+		Student myStudent = studentDAO.findById(ID);
+
+		// Update the Student Object with First Name
+		myStudent.setFirstName(updateName);
+		studentDAO.update(myStudent);
+
+		// Display the Student Object
+		Student tempStudent = studentDAO.findById(ID);
+		System.out.println("First Name: " + tempStudent.getFirstName());
+		System.out.println("Last Name: " + tempStudent.getLastName());
+		System.out.println("Email ID: " + tempStudent.getEmail());
 
 	}
 
@@ -38,9 +72,9 @@ public class CruddemoApplication {
 		for (Student tempStudent : myStudents) {
 			System.out.println(tempStudent);
 		}
-		
-		if(myStudents.isEmpty())
-				System.out.println("No Record Found");
+
+		if (myStudents.isEmpty())
+			System.out.println("No Record Found");
 	}
 
 	private void queryForStudents(StudentDAO studentDAO) {
